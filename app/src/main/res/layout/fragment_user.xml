@@ -1,0 +1,33 @@
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageButton
+        android:id="@+id/btnHeadPhoto"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/head_photo"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"/>
+    <ScrollView
+        android:id="@+id/scrollViewSetting"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btnHeadPhoto">
+
+        <!--<Button-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="btn1"/>-->
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="btn2"/>-->
+
+    </ScrollView>
+
+
+</RelativeLayout>
+
+

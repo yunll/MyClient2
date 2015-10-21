@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="这里是一个title(未制作)"
+        android:layout_alignParentTop="true"
+        android:textSize="24sp"
+        android:textColor="#FFEB6100"/>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn"
+        android:layout_below="@id/txtTitle" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btn"
+        android:layout_marginBottom="40dp"/>
+
+
+
+
+    <com.viewpagerindicator.TitlePageIndicator
+            android:id="@+id/titlePage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#58c5c7"/>
+
+    <!--<com.viewpagerindicator.TabPageIndicator-->
+        <!--android:id="@+id/page_indicator"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:background="#436EEE" />-->
+</RelativeLayout>

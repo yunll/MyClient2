@@ -1,0 +1,40 @@
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/txtBTState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="蓝牙开关："
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"/>
+    <Button
+        android:id="@+id/btn_ifBTisOpen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="换成一个开关控件"
+        android:textSize="12sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_ifBTisOpen"
+        android:text="附近可用停车场设备："
+        android:textSize="24sp"/>
+    <ListView
+        android:id="@+id/btDeviceList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/txt1"/>
+    <Button
+        android:id="@+id/btn_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="测试用按钮，点击时在list中添加内容"/>
+</RelativeLayout>
