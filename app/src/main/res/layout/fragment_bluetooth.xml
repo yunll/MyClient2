@@ -1,40 +1,107 @@
-<RelativeLayout
+<!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/txtBTState"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="蓝牙开关："-->
+        <!--android:textSize="18sp"-->
+        <!--android:layout_marginTop="10dp"/>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/btn_ifBTisOpen"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="换成一个开关控件"-->
+        <!--android:textSize="12sp"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignParentRight="true"/>-->
+
+    <!--<example.hp.com.myclient.PullToRefresh.RefreshableView-->
+        <!--android:id="@+id/refreshable_view"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent" >-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/txt1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/btn_ifBTisOpen"-->
+            <!--android:text="附近可用停车场设备："-->
+            <!--android:textSize="24sp"/>-->
+        <!--<ListView-->
+            <!--android:id="@+id/btDeviceList"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"/>-->
+            <!--&lt;!&ndash;android:layout_below="@id/txt1"/>&ndash;&gt;-->
+        <!--<Button-->
+            <!--android:id="@+id/btn_test"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:text="测试用按钮，点击时在list中添加内容"/>-->
+
+    <!--</example.hp.com.myclient.PullToRefresh.RefreshableView>-->
+
+<!--</RelativeLayout>-->
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txtBTState"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="蓝牙开关："
-        android:textSize="18sp"
-        android:layout_marginTop="10dp"/>
-    <Button
-        android:id="@+id/btn_ifBTisOpen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="换成一个开关控件"
-        android:textSize="12sp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txtBTState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="蓝牙开闭状态："
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"/>
+            <!--android:textColor="#0070C6" -->
 
+        <example.hp.com.myclient.SwitchButton.SwitchButton
+            android:id="@+id/switchbtn_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"/>
+
+    </RelativeLayout>
     <TextView
         android:id="@+id/txt1"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_ifBTisOpen"
         android:text="附近可用停车场设备："
-        android:textSize="24sp"/>
-    <ListView
-        android:id="@+id/btDeviceList"
+        android:textSize="24sp"
+        android:layout_marginLeft="10dp"/>
+    <example.hp.com.myclient.PullToRefresh.RefreshableView
+        android:id="@+id/refreshable_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/txt1"/>
-    <Button
-        android:id="@+id/btn_test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="测试用按钮，点击时在list中添加内容"/>
-</RelativeLayout>
+        android:layout_height="match_parent" >
+
+        <ListView
+            android:id="@+id/btDeviceList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+
+    </example.hp.com.myclient.PullToRefresh.RefreshableView>
+    <!--<Button-->
+    <!--android:id="@+id/btn_test"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="测试用按钮，点击时在list中添加内容"/>-->
+</LinearLayout>
+

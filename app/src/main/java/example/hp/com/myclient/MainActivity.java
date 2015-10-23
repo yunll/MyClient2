@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -32,7 +33,7 @@ import example.hp.com.myclient.Tools.BluetoothTools;
 import example.hp.com.myclient.Tools.MyApplication;
 import example.hp.com.myclient.Tools.TabAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BluetoothFragment.onBeginScanningListener{
 
     // 表示有多少个页面的list
     private List<Fragment> fragmentList=new ArrayList<>();
@@ -58,19 +59,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
         initUI();
         initPages();
 
-
-        btn=(Button)findViewById(R.id.btn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BeginScan();
-            }
-        });
         // region # BluetoothClient 部分
 
 
@@ -134,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentList.add(bluetoothFragment);
         fragmentList.add(erweimaFragment);
         fragmentList.add(userFragment);
+
     }
     /**
      * 初始化MainActivity的界面
@@ -239,6 +234,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    public void onBeginScanning() {
+        Intent searchIntent=new Intent(BluetoothTools.ACTION_START_DISCOVERY);
+        sendBroadcast(searchIntent);
+    }
 
 // endregion
 
