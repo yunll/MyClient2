@@ -241,6 +241,11 @@ public class MainActivity extends AppCompatActivity implements BluetoothFragment
         sendBroadcast(searchIntent);
     }
 
+    @Override
+    public void onSelectDevice(int position) {
+        controlBinder.SelectedDevice(position);
+    }
+
 // endregion
 
 }

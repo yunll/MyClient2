@@ -1,6 +1,7 @@
 package example.hp.com.myclient.Fragments;
 
 import android.app.SearchManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import example.hp.com.myclient.R;
+import example.hp.com.myclient.TempLogin.TempLogin;
 import example.hp.com.myclient.Tools.MyApplication;
 
 
@@ -44,6 +46,8 @@ public class UserFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()){
             case R.id.btn_login:
                 // TODO: 2015/10/23 跳转到登录界面
+                Intent intent=new Intent(MyApplication.getContext(), TempLogin.class);
+                startActivity(intent);
                 break;
             case R.id.btn_register:
                 // TODO: 2015/10/23 跳转到注册界面 

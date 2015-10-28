@@ -5,8 +5,67 @@
     <file url="file://$PROJECT_DIR$/app/libs/baidumapapi_v3_5_0.jar" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/libs/httpmime-4.1.2.jar" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/libs/locSDK_6.03.jar" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/example/hp/com/myclient/baidumap" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/libs/zxing.jar" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/hp/com/myclient/BaiduMap/BNDemoGuideActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/hp/com/myclient/BaiduMap/DemoRoutePlanListener.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/hp/com/myclient/BaiduMap/MyOm.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/hp/com/myclient/BaiduMap/MyOnGetRoutePlanResultListener.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/hp/com/myclient/BaiduMap/MyPoiOverlay.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/hp/com/myclient/BaiduMap/Sensorlistener.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/hp/com/myclient/BaiduMap/Text_watch.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/hp/com/myclient/BaiduMap/init_key.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/hp/com/myclient/BaiduMap/myOnGetSuggestionResultListener.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/hp/com/myclient/QRcode/MipcaActivityCapture.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/hp/com/myclient/QRcode/camera" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/hp/com/myclient/QRcode/decoding" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/hp/com/myclient/QRcode/view" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/jniLibs" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_edittext.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_edittext_focused.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_edittext_normal.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/bottom_tab_bg.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/button_down.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/button_on.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/button_style.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/edit_cursor.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/glass.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ground_overlay.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_en.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_geo.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_marka.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_markb.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_markc.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_markd.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_marke.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_markf.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_markg.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_markh.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_marki.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_markj.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_st.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/mm_title_back_btn.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/mm_title_back_focused.9.PNG" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/mm_title_back_normal.9.PNG" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/mm_title_back_pressed.9.PNG" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/mm_title_bg_alpha.9.PNG" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/next_.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/next_down_.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/popup.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/popup_down.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/popup_left.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/popup_middle.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/popup_right.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/popup_side.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/pre_.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/pre_down_.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_capture.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_title.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/icon_geo.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/raw" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values/color.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values/ids.xml" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

@@ -90,8 +90,13 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="baidumapapi_v3_5_0" level="project" />
+    <orderEntry type="library" exported="" name="locSDK_6.03" level="project" />
+    <orderEntry type="library" exported="" name="httpmime-4.1.2" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.2.1" level="project" />
+    <orderEntry type="library" exported="" name="BaiduNaviSDK_2.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
+    <orderEntry type="library" exported="" name="zxing" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
     <orderEntry type="module" module-name="ViewPagerIndicator_library" exported="" />
   </component>

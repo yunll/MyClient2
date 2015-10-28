@@ -42,6 +42,7 @@ public class BluetoothFragment extends Fragment {
         // Mainactivity实现onBeginScanningListener接口中的onBeginScanning方法
         // fragment中直接调用beginScanningListener.onBeginScanning()即可
         void onBeginScanning();
+        void onSelectDevice(int position);
     }
 
     /**
@@ -96,7 +97,8 @@ public class BluetoothFragment extends Fragment {
         btDeviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: 2015/10/22 点击设备，开始连接
+                //点击设备，开始连接
+                beginScanningListener.onSelectDevice(position);
             }
         });
         return view;
