@@ -21,10 +21,30 @@ public class MyBluetoothDevice implements Parcelable {
     public static List<String> addressList=new ArrayList<>();
 
     // 初始化各个列表
-    public static void Init(){
-        myBluetoothDeviceList.clear();
-        bluetoothDeviceList.clear();
-        addressList.clear();
+    public static void Init() {
+        if (myBluetoothDeviceList.size() > 0) {
+            MyBluetoothDevice TempMyBluetoothDevice = myBluetoothDeviceList.get(0);
+            if (TempMyBluetoothDevice != null) {
+                // 如果列表里存在设备,才可能需要清空列表
+                if (TempMyBluetoothDevice.isConnected() == true) {
+                    // 如果第一个设备已连接，那么需要把他保留下来
+                    BluetoothDevice tempBluetoothDevice = bluetoothDeviceList.get(0);
+                    String tempAddress = addressList.get(0);
+
+                    myBluetoothDeviceList.clear();
+                    bluetoothDeviceList.clear();
+                    addressList.clear();
+
+                    myBluetoothDeviceList.add(TempMyBluetoothDevice);
+                    bluetoothDeviceList.add(tempBluetoothDevice);
+                    addressList.add(tempAddress);
+                } else {
+                    myBluetoothDeviceList.clear();
+                    bluetoothDeviceList.clear();
+                    addressList.clear();
+                }
+            }
+        }
     }
 
     // 设备名字
@@ -37,9 +57,6 @@ public class MyBluetoothDevice implements Parcelable {
     private int size;
     // 记录RSSI的数组
     private Queue<Short> rssiQueue=new ArrayDeque<>();
-
-
-
 
     /*
     * 额外信息：

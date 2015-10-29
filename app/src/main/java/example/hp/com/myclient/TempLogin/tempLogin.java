@@ -4,8 +4,6 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +27,7 @@ import java.io.IOException;
 import example.hp.com.myclient.R;
 import example.hp.com.myclient.Tools.HttpUtils;
 import example.hp.com.myclient.Tools.MyApplication;
+import example.hp.com.myclient.MyUser;
 
 public class TempLogin extends AppCompatActivity implements View.OnClickListener{
 
@@ -39,6 +38,7 @@ public class TempLogin extends AppCompatActivity implements View.OnClickListener
     private Button btnForget;
 
     private TextView txtGoToRegister;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,7 @@ public class TempLogin extends AppCompatActivity implements View.OnClickListener
         btnSubmit.setOnClickListener(this);
         btnForget.setOnClickListener(this);
         txtGoToRegister.setOnClickListener(this);
+
     }
 
 
@@ -70,12 +71,10 @@ public class TempLogin extends AppCompatActivity implements View.OnClickListener
                             "用户名或密码不能为空，请检查输入",Toast.LENGTH_SHORT).show();
                 }else{
                     String query="username="+userId+"&password="+password;
-                    Log.d("queryString____________",query);
+                    Log.d("queryString____________", query);
                     String url= HttpUtils.BASE_URL+"/login?"+query;
                     // FIXME: 2015/10/23 Http模块有问题
-//                    String result=HttpUtils.queryStringForPost(url);
                     new SubmitAsyncTask().execute(url);
-//                    Log.d("result___________",result);
                 }
                 break;
             case R.id.btnForgetPassword:
@@ -93,6 +92,16 @@ public class TempLogin extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+
+    private void checkToFinish(){
+        if(MyUser.isLoggedIn()){
+            Log.d("LoginFragmentfinish", "checkToFinish ");
+            this.finish();
+        }
+    }
+    /**
+     *  用于login的task
+     */
     public class SubmitAsyncTask extends AsyncTask<String, Void, String> {
         String info = "";
         @Override
@@ -107,16 +116,18 @@ public class TempLogin extends AppCompatActivity implements View.OnClickListener
         protected void onPostExecute(String result) {
             // TODO Auto-generated method stub
             String res = result.trim();
-//            if(res.equals("0")){
-//                info = "验证通过.....";
-//            }else if(res.equals("1")){
-//                info = "密码错误.....";
-//            }else if(res.equals("2")){
-//                info = "用户名错误.....";
-//            }else if(res.equals("-1")){
-//                info = "返回结果异常！";
-//            }
-//            Log.d("onPostExecute_________________", res);
+            if(res.equals("0")){
+                MyUser.setUsername(etxtId.getText().toString().trim());
+                MyUser.setIsLoggedIn(true);
+                checkToFinish();
+            }else if(res.equals("1")){
+                Toast.makeText(MyApplication.getContext(),
+                        "用户名或密码错误，请检查.",Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(MyApplication.getContext(),
+                        "网络连接错误，请稍候重试..",Toast.LENGTH_SHORT).show();
+            }
+
             super.onPostExecute(result);
         }
     }

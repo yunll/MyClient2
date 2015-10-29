@@ -11,6 +11,14 @@ import java.util.UUID;
  * Created by hp on 2015/9/23.
  */
 public class BluetoothTools {
+    private static BluetoothAdapter bluetoothAdapter;
+
+    public static BluetoothAdapter getBTAdapter(){
+        if(bluetoothAdapter==null){
+            bluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
+        }
+        return bluetoothAdapter;
+    }
 
     // 记录可用地址列表
     public static List<String> ParkingDeviceAddressList=new ArrayList<>();

@@ -129,7 +129,7 @@
             android:label="@string/title_activity_temp_login" >
         </activity>
         <activity
-            android:name=".TempLogin.tempRegister"
+            android:name=".TempLogin.TempRegister"
             android:label="@string/title_activity_temp_register" >
         </activity>
         <activity android:name=".QRcode.MipcaActivityCapture">

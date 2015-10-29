@@ -1,20 +1,21 @@
 package example.hp.com.myclient.Fragments;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import example.hp.com.myclient.MyUser;
 import example.hp.com.myclient.R;
 import example.hp.com.myclient.TempLogin.TempLogin;
+import example.hp.com.myclient.TempLogin.TempRegister;
 import example.hp.com.myclient.Tools.MyApplication;
-
 
 /**
  * Created by hp on 2015/10/21.
@@ -35,22 +36,26 @@ public class UserFragment extends Fragment implements View.OnClickListener{
         btnlogin.setOnClickListener(this);
         return view;
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_login:
                 // TODO: 2015/10/23 跳转到登录界面
-                Intent intent=new Intent(MyApplication.getContext(), TempLogin.class);
-                startActivity(intent);
+                Intent intentLogin=new Intent(MyApplication.getContext(), TempLogin.class);
+                startActivity(intentLogin);
                 break;
             case R.id.btn_register:
-                // TODO: 2015/10/23 跳转到注册界面 
+                // TODO: 2015/10/23 跳转到注册界面
+                Intent intentRegister=new Intent(MyApplication.getContext(), TempRegister.class);
+                startActivity(intentRegister);
                 break;
         }
     }

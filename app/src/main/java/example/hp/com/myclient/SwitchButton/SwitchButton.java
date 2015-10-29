@@ -158,7 +158,7 @@ public class SwitchButton extends CheckBox {
 
     public boolean isChecked() {
         // TODO: 2015/10/22 改为!mChecked 即可实现状态互换
-        return mChecked;
+        return !mChecked;
     }
 
     public void toggle() {

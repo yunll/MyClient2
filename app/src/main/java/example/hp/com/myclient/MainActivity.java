@@ -1,23 +1,27 @@
 package example.hp.com.myclient;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.viewpagerindicator.TitlePageIndicator;
+
+import org.apache.http.impl.client.TunnelRefusedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +31,14 @@ import example.hp.com.myclient.BTClient.Utils.ClientService;
 import example.hp.com.myclient.Fragments.BluetoothFragment;
 import example.hp.com.myclient.Fragments.ErweimaFragment;
 import example.hp.com.myclient.Fragments.MapFragment;
+import example.hp.com.myclient.Fragments.NewUserFragment;
 import example.hp.com.myclient.Fragments.UserFragment;
 
 import example.hp.com.myclient.Tools.BluetoothTools;
 import example.hp.com.myclient.Tools.MyApplication;
 import example.hp.com.myclient.Tools.TabAdapter;
 
-public class MainActivity extends AppCompatActivity implements BluetoothFragment.onBeginScanningListener{
+public class MainActivity extends AppCompatActivity implements BluetoothFragment.onMyBTFragmentListener {
 
     // 表示有多少个页面的list
     private List<Fragment> fragmentList=new ArrayList<>();
@@ -45,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothFragment
     private ErweimaFragment erweimaFragment=new ErweimaFragment();
     private UserFragment userFragment=new UserFragment();
 
+    private NewUserFragment newUserFragment=new NewUserFragment();
 
     // 导航栏&ViewPager
 //    private TabPageIndicator mPageIndicator;
@@ -66,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothFragment
         initPages();
 
         // region # BluetoothClient 部分
-
 
 
         // endregion
@@ -127,7 +132,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothFragment
         fragmentList.add(mapFragment);
         fragmentList.add(bluetoothFragment);
         fragmentList.add(erweimaFragment);
-        fragmentList.add(userFragment);
+//        fragmentList.add(userFragment);
+        fragmentList.add(newUserFragment);
 
     }
     /**
@@ -143,20 +149,11 @@ public class MainActivity extends AppCompatActivity implements BluetoothFragment
         mViewPager.setAdapter(fragPagerAdapter);
 
 //        mPageIndicator.setViewPager(mViewPager, 0);
-        titlePageIndicator.setViewPager(mViewPager,0);
+        titlePageIndicator.setViewPager(mViewPager, 0);
     }
 
 
 // region  # BluetoothClient 部分
-
-    /**
-     * 临时添加的，用于fragment向activity发送开始扫描的请求
-     * 应该改为接口方式
-     */
-    public void BeginScan(){
-        Intent searchIntent=new Intent(BluetoothTools.ACTION_START_DISCOVERY);
-        sendBroadcast(searchIntent);
-    }
 
 
     // service中的流程控制器
@@ -179,16 +176,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothFragment
             String action = intent.getAction();
             switch (action){
                 case BluetoothTools.ACTION_START_DISCOVERY:
-                    // 开始搜索时，清空已有的设备列表
-                    // TODO: 2015/9/25 添加进度条
-                    // TODO: 2015/10/17 下拉刷新
+                    // 开始搜索时，清空已有的设备列表，但是保留已经连接的设备
 
-                    // FIXME: 2015/10/18 保留已连接的设备！！！
                     MyBluetoothDevice.Init();
-//                    myBTDeviceAdapter=new MyBTDeviceAdapter(
-//                            MyApplication.getContext(),R.layout.bt_device,
-//                            MyBluetoothDevice.myBluetoothDeviceList);
-//                    listItem.setAdapter(myBTDeviceAdapter);
                     break;
                 case BluetoothTools.ACTION_FOUND_DEVICE:
                     // 刷新一下列表
@@ -235,8 +225,11 @@ public class MainActivity extends AppCompatActivity implements BluetoothFragment
         }
     };
 
+
+
     @Override
     public void onBeginScanning() {
+        // 下拉刷新，然后开始搜索设备
         Intent searchIntent=new Intent(BluetoothTools.ACTION_START_DISCOVERY);
         sendBroadcast(searchIntent);
     }
@@ -244,6 +237,11 @@ public class MainActivity extends AppCompatActivity implements BluetoothFragment
     @Override
     public void onSelectDevice(int position) {
         controlBinder.SelectedDevice(position);
+    }
+
+    @Override
+    public boolean onSetBTEnable(boolean enable) {
+        return controlBinder.setBTAdapterEnbale(enable);
     }
 
 // endregion
