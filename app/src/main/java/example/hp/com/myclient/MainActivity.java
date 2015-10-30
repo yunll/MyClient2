@@ -16,9 +16,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import org.apache.http.impl.client.TunnelRefusedException;
@@ -71,6 +74,15 @@ public class MainActivity extends AppCompatActivity implements BluetoothFragment
         initUI();
         initPages();
 
+        // gson测试，已通过
+//        Gson gson=new Gson();
+//        MyBluetoothDevice temp1=new MyBluetoothDevice();
+//        MyBluetoothDevice temp2=new MyBluetoothDevice();
+//        List<MyBluetoothDevice> temp=new ArrayList<>();
+//        temp.add(temp1);
+//        temp.add(temp2);
+//        String object =gson.toJson(temp,new TypeToken<List<MyBluetoothDevice>>(){}.getType());
+//        Log.d("_______________", object);
         // region # BluetoothClient 部分
 
 

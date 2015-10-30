@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import example.hp.com.myclient.R;
 import example.hp.com.myclient.MyUser;
 import example.hp.com.myclient.Tools.MyApplication;
@@ -33,7 +35,6 @@ public class NewUserFragment extends Fragment {
     }
 
 
-    // FIXME: 2015/10/28 两个页面会重叠？？
     @Override
     public void onStart() {
         super.onStart();

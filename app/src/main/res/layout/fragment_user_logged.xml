@@ -18,6 +18,13 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:gravity="center" />
+
+    <Button
+        android:id="@+id/logged_btn_consume_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="历史账单"/>
+
     <Button
         android:id="@+id/logged_btn_logout"
         android:layout_width="match_parent"

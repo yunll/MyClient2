@@ -29,7 +29,7 @@ public class ClientService extends Service {
 
     private ControlBinder mBinder=new ControlBinder();
 
-    private BluetoothAdapter bluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
+    private BluetoothAdapter bluetoothAdapter=BluetoothTools.getBTAdapter();
     private ClientCommunicateThread communicateThread;
 
     // 正在运行状态
@@ -48,7 +48,7 @@ public class ClientService extends Service {
         @Override
         public void run() {
             // 不是连接状态，则扫描附近设备
-            if(!icConnecting){
+            if(!icConnecting&&bluetoothAdapter.isEnabled()){
                 bluetoothAdapter.cancelDiscovery();
                 // 开始搜索设备
                 if(!bluetoothAdapter.isEnabled()){
@@ -90,7 +90,26 @@ public class ClientService extends Service {
             }else{
                 return false;
             }
+        }
 
+        /**
+         * 修改蓝牙状态为enbale
+         * 成功返回ture
+         * 失败返回false
+         * @param enbale
+         */
+        public boolean setBTAdapterEnbale(boolean enbale){
+            try{
+                if(enbale==true){
+                    bluetoothAdapter.enable();
+                }else{
+                    bluetoothAdapter.disable();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                return false;
+            }
+            return true;
         }
     }
 
