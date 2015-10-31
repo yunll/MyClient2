@@ -4,8 +4,6 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -28,7 +26,8 @@ import java.io.IOException;
 
 import example.hp.com.myclient.MyUser;
 import example.hp.com.myclient.R;
-import example.hp.com.myclient.Tools.HttpUtils;
+import example.hp.com.myclient.Utils.HttpCallbackListener;
+import example.hp.com.myclient.Utils.HttpUtil;
 import example.hp.com.myclient.Tools.MyApplication;
 
 public class TempRegister extends AppCompatActivity implements OnClickListener{
@@ -73,9 +72,27 @@ public class TempRegister extends AppCompatActivity implements OnClickListener{
                 }else{
                     String query="username="+username+"&password="+password;
                     Log.d("queryString____________", query);
-                    String url= HttpUtils.BASE_URL+"/register?"+query;
+                    String url= HttpUtil.BASE_URL+"/register?"+query;
                     // FIXME: 2015/10/23 Http模块有问题
-                    new SubmitAsyncTask().execute(url);
+                    HttpUtil.sendHttpRequest(url, new HttpCallbackListener() {
+                        @Override
+                        public void onFinish(String response) {
+                            if (response.equals("0")) {
+                                MyUser.setUsername(etxtUsername.getText().toString().trim());
+                                MyUser.setIsLoggedIn(true);
+                                checkToFinish();
+                            } else if (response.equals("1")) {
+//                                Toast.makeText(MyApplication.getContext(),
+//                                        "该用户名已存在，更换..", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Toast.makeText(MyApplication.getContext(),
+                                    "网络连接错误，请稍候重试..", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
                 break;
             case R.id.register_btn_cancel:
@@ -83,64 +100,5 @@ public class TempRegister extends AppCompatActivity implements OnClickListener{
                 break;
         }
     }
-    /**
-     *  用于login的task
-     */
-    public class SubmitAsyncTask extends AsyncTask<String, Void, String> {
-        String info = "";
-        @Override
-        protected String doInBackground(String... params) {
-            // TODO Auto-generated method stub
-            String url = params[0];
-            String reps = doGet(url);
-            return reps;
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-            String res = result.trim();
-            if(res.equals("0")){
-                // 注册成功
-                MyUser.setUsername(etxtUsername.getText().toString().trim());
-                MyUser.setIsLoggedIn(true);
-                checkToFinish();
-            }else if(res.equals("1")){
-                Toast.makeText(MyApplication.getContext(),
-                        "该用户名已存在，更换..", Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(MyApplication.getContext(),
-                        "网络连接错误，请稍候重试..",Toast.LENGTH_SHORT).show();
-            }
-
-            super.onPostExecute(result);
-        }
-    }
-    private String doGet(String url){
-        String responseStr = "";
-        try {
-            HttpGet httpRequest = new HttpGet(url);
-            HttpParams params = new BasicHttpParams();
-            ConnManagerParams.setTimeout(params, 1000);
-            HttpConnectionParams.setConnectionTimeout(params, 3000);
-            HttpConnectionParams.setSoTimeout(params, 5000);
-            httpRequest.setParams(params);
-
-            HttpResponse httpResponse = new DefaultHttpClient().execute(httpRequest);
-            final int ret = httpResponse.getStatusLine().getStatusCode();
-            if(ret == HttpStatus.SC_OK){
-                responseStr = EntityUtils.toString(httpResponse.getEntity(), HTTP.UTF_8);
-            }else{
-                responseStr = "-1";
-            }
-        } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return responseStr;
-    }
 }

@@ -33,7 +33,8 @@ import java.util.List;
 import example.hp.com.myclient.Models.ConsumeRecord;
 import example.hp.com.myclient.R;
 import example.hp.com.myclient.MyUser;
-import example.hp.com.myclient.Tools.HttpUtils;
+import example.hp.com.myclient.Utils.HttpCallbackListener;
+import example.hp.com.myclient.Utils.HttpUtil;
 import example.hp.com.myclient.Tools.MyApplication;
 
 /**
@@ -68,15 +69,14 @@ public class LoggedFragment extends Fragment implements View.OnClickListener{
      */
     public void ChangeFragment(int containerViewId ,Fragment fragment, boolean isAddedStack){
         FragmentTransaction transaction=getFragmentManager().beginTransaction();
-//        transaction.setCustomAnimations(R.anim.fragment_slide_right_in, R.anim.fragment_slide_left_out,
-//                R.anim.fragment_slide_left_in, R.anim.fragment_slide_right_out);
+//        transaction.setCustomAnimations(R.anim.fragment_slide_right_in, R.anim.fragment_slide_left_out);
+
         transaction.replace(containerViewId, fragment);
         if(isAddedStack){
             transaction.addToBackStack(null);
         }
         transaction.commit();
     }
-
 
     @Override
     public void onClick(View v) {
@@ -87,65 +87,28 @@ public class LoggedFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.logged_btn_consume_history:
                 String query="username="+MyUser.getUsername();
-                String url= HttpUtils.BASE_URL+"/consumehistory?"+query;
-                new SubmitAsyncTask().execute(url);
+                String url= HttpUtil.BASE_URL+"/consumehistory?"+query;
+                HttpUtil.sendHttpRequest(url, new HttpCallbackListener() {
+                    @Override
+                    public void onFinish(String response) {
+                        String res = response.trim();
+                        Log.d("res__________________", res);
+                        Gson gson = new Gson();
+                        List<ConsumeRecord> list = gson.fromJson(res, new
+                                TypeToken<List<ConsumeRecord>>() { }.getType());
+                        for (ConsumeRecord c : list) {
+                            Log.d("consume____________", c.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+//                        Toast.makeText(MyApplication.getContext(),
+//                                "网络连接错误，请稍候重试..", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
         }
     }
-    /**
-     *  用于login的task
-     */
-    public class SubmitAsyncTask extends AsyncTask<String, Void, String> {
-        String info = "";
-        @Override
-        protected String doInBackground(String... params) {
-            // TODO Auto-generated method stub
-            String url = params[0];
-            String reps = doGet(url);
-            return reps;
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-            String res = result.trim();
-            Log.d("res__________________",res);
-            Gson gson=new Gson();
-            List<ConsumeRecord> list = gson.fromJson(res, new
-                    TypeToken<List<ConsumeRecord>>(){}.getType());
-            for(ConsumeRecord c: list){
-                Toast.makeText(MyApplication.getContext(),
-                        c.toString(),Toast.LENGTH_SHORT).show();
-                Log.d("consume____________",c.toString());
-            }
-            super.onPostExecute(result);
-        }
-    }
-    private String doGet(String url){
-        String responseStr = "";
-        try {
-            HttpGet httpRequest = new HttpGet(url);
-            HttpParams params = new BasicHttpParams();
-            ConnManagerParams.setTimeout(params, 1000);
-            HttpConnectionParams.setConnectionTimeout(params, 3000);
-            HttpConnectionParams.setSoTimeout(params, 5000);
-            httpRequest.setParams(params);
-
-            HttpResponse httpResponse = new DefaultHttpClient().execute(httpRequest);
-            final int ret = httpResponse.getStatusLine().getStatusCode();
-            if(ret == HttpStatus.SC_OK){
-                responseStr = EntityUtils.toString(httpResponse.getEntity(), HTTP.UTF_8);
-            }else{
-                responseStr = "-1";
-            }
-        } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return responseStr;
-    }
 }

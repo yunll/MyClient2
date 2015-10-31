@@ -16,9 +16,14 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.baidu.navisdk.ui.widget.RoutePlanObserver;
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 
 import example.hp.com.myclient.BTClient.Module.MyBluetoothDevice;
+import example.hp.com.myclient.Models.MyMessage;
+import example.hp.com.myclient.Models.Park;
 import example.hp.com.myclient.Tools.BluetoothTools;
 import example.hp.com.myclient.Tools.MyApplication;
 
@@ -143,9 +148,21 @@ public class ClientService extends Service {
                 case BluetoothTools.MESSAGE_RECEIVE_MESSAGE:
                     // FIXME: 2015/10/17 更新为接收到消息，判断类别，然后再进行操作
                     // 接收到来自线程的消息，那么就更新到activity上
-                    Intent msgIntent=new Intent(BluetoothTools.ACTION_MESSAGE_TO_ACTIVITY);
-                    msgIntent.putExtra(BluetoothTools.DATA,(Serializable)msg.obj);
-                    sendBroadcast(msgIntent);
+
+                    // 根据MyMessage的type对消息进行分类，然后解析MyMessage的message（json）
+                    Gson gson=new Gson();
+                    String data=msg.obj.toString();
+                    MyMessage myMessage=gson.fromJson(data, MyMessage.class);
+                    switch (myMessage.getType()){
+                        case BluetoothTools.MESSAGE_TYPE_DETIALS:
+                            Toast.makeText(MyApplication.getContext(),
+                                    myMessage.getMessage(),Toast.LENGTH_SHORT).show();
+                            Park park=gson.fromJson(myMessage.getMessage(),Park.class);
+                            break;
+                    }
+//                    Intent msgIntent=new Intent(BluetoothTools.ACTION_MESSAGE_TO_ACTIVITY);
+//                    msgIntent.putExtra(BluetoothTools.DATA,(Serializable)msg.obj);
+//                    sendBroadcast(msgIntent);
                     break;
                 case BluetoothTools.MESSAGE_CONNECT_ERROR:
                     icConnecting= false;
@@ -187,6 +204,7 @@ public class ClientService extends Service {
                             myBluetoothDevice=new MyBluetoothDevice(device.getName(),
                                     device.getAddress(),rssi);
                             MyBluetoothDevice.myBluetoothDeviceList.add(myBluetoothDevice);
+
                             // FIXME: 2015/10/18 自动连接功能
 //                        // region #直接去连接设备，不确定能不能这么做
 //                        int selectedpos=BluetoothTools.ParkingDeviceAddressList.indexOf(device.getAddress());
@@ -212,10 +230,17 @@ public class ClientService extends Service {
                                     myBluetoothDevice.distance<0.5) {
                                 Toast.makeText(MyApplication.getContext(), "与目标设备距离较近",
                                         Toast.LENGTH_SHORT).show();
-                                mBinder.DataToServer("距离为"+
-                                        Double.toString(myBluetoothDevice.distance)+"米");
+                                Gson gson=new Gson();
+                                MyMessage myMessage=new MyMessage(BluetoothTools.MESSAGE_TYPE_CHECKIN,"checkin");
+                                mBinder.DataToServer(gson.toJson(myMessage,MyMessage.class));
+//                                mBinder.DataToServer("距离为"+
+//                                        Double.toString(myBluetoothDevice.distance)+"米");
                             }
                         }
+                        // 实时获取最新详情，要求返回一个停车场类
+                        MyMessage myMessage=new MyMessage(BluetoothTools.MESSAGE_TYPE_DETIALS,"");
+                        Gson gson=new Gson();
+                        mBinder.DataToServer(gson.toJson(myMessage,MyMessage.class));
                     }catch (Exception e){
                         e.printStackTrace();
                     }

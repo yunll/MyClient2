@@ -51,11 +51,13 @@ public class UserFragment extends Fragment implements View.OnClickListener{
                 // TODO: 2015/10/23 跳转到登录界面
                 Intent intentLogin=new Intent(MyApplication.getContext(), TempLogin.class);
                 startActivity(intentLogin);
+                getActivity().overridePendingTransition(R.anim.a, R.anim.b);
                 break;
             case R.id.btn_register:
                 // TODO: 2015/10/23 跳转到注册界面
                 Intent intentRegister=new Intent(MyApplication.getContext(), TempRegister.class);
                 startActivity(intentRegister);
+                getActivity().overridePendingTransition(R.anim.a, R.anim.b);
                 break;
         }
     }

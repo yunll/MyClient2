@@ -26,6 +26,11 @@ public class BluetoothTools {
 
     private static BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
 
+
+    public static final int MESSAGE_TYPE_DETIALS=1;
+    public static final int MESSAGE_TYPE_CHECKIN=2;
+    public static final int MESSAGE_TYPE_CHECKOUT=3;
+
     public static final String REMOTE_DEVICE_NAME ="REMOTE_DEVICE_NAME";
 //    public static final UUID PRIVATE_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     public static final UUID PRIVATE_UUID = UUID.fromString("0f3561b9-bda5-4672-84ff-ab1f98e349b6");

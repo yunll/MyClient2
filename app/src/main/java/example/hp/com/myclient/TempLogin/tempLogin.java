@@ -1,5 +1,6 @@
 package example.hp.com.myclient.TempLogin;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,7 +26,8 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 
 import example.hp.com.myclient.R;
-import example.hp.com.myclient.Tools.HttpUtils;
+import example.hp.com.myclient.Utils.HttpCallbackListener;
+import example.hp.com.myclient.Utils.HttpUtil;
 import example.hp.com.myclient.Tools.MyApplication;
 import example.hp.com.myclient.MyUser;
 
@@ -64,29 +66,48 @@ public class TempLogin extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnSubmitLogin:
-                String userId=etxtId.getText().toString().trim();
+                final String userId=etxtId.getText().toString().trim();
                 String password=etxtPassword.getText().toString().trim();
                 if(userId.isEmpty()||password.isEmpty()){
                     Toast.makeText(MyApplication.getContext(),
                             "用户名或密码不能为空，请检查输入",Toast.LENGTH_SHORT).show();
                 }else{
                     String query="username="+userId+"&password="+password;
-                    Log.d("queryString____________", query);
-                    String url= HttpUtils.BASE_URL+"/login?"+query;
+                    String url= HttpUtil.BASE_URL+"/login?"+query;
+                    Log.d("queryUrl____________", url);
                     // FIXME: 2015/10/23 Http模块有问题
-                    new SubmitAsyncTask().execute(url);
+                    HttpUtil.sendHttpRequest(url, new HttpCallbackListener() {
+                        @Override
+                        public void onFinish(String response) {
+                            Log.d(response, "onFinish ");
+                            String res = response.trim();
+                            if (res.equals("0")) {
+                                // 登陆成功
+                                MyUser.setUsername(userId);
+                                MyUser.setIsLoggedIn(true);
+                                checkToFinish();
+                            } else if (res.equals("1")) {
+                                // 账号或密码错误
+//                                Toast.makeText(MyApplication.getContext(),
+//                                        "账号或密码错误，请检查..", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+//                            Toast.makeText(MyApplication.getContext(),
+//                                    "网络连接错误，请稍候重试..", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
                 break;
             case R.id.btnForgetPassword:
                 Log.d("btnForgetPassword","btnForgetPassword");
                 break;
             case R.id.txtLoginToResiger:
-                // 暂时性的
-                String username=etxtId.getText().toString().trim();
-                String pw=etxtPassword.getText().toString().trim();
-                String query="username="+username+"&password="+pw;
-                String url= HttpUtils.BASE_URL+"/register?"+query;
-                new SubmitAsyncTask().execute(url);
+                // 上方注册按钮，跳转到注册页面
+                Intent intentRegister=new Intent(MyApplication.getContext(), TempRegister.class);
+                startActivity(intentRegister);
                 break;
 
         }
@@ -97,65 +118,7 @@ public class TempLogin extends AppCompatActivity implements View.OnClickListener
         if(MyUser.isLoggedIn()){
             Log.d("LoginFragmentfinish", "checkToFinish ");
             this.finish();
+            overridePendingTransition(R.anim.a,R.anim.b);
         }
-    }
-    /**
-     *  用于login的task
-     */
-    public class SubmitAsyncTask extends AsyncTask<String, Void, String> {
-        String info = "";
-        @Override
-        protected String doInBackground(String... params) {
-            // TODO Auto-generated method stub
-            String url = params[0];
-            String reps = doGet(url);
-            return reps;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-            String res = result.trim();
-            if(res.equals("0")){
-                MyUser.setUsername(etxtId.getText().toString().trim());
-                MyUser.setIsLoggedIn(true);
-                checkToFinish();
-            }else if(res.equals("1")){
-                Toast.makeText(MyApplication.getContext(),
-                        "用户名或密码错误，请检查.",Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(MyApplication.getContext(),
-                        "网络连接错误，请稍候重试..",Toast.LENGTH_SHORT).show();
-            }
-
-            super.onPostExecute(result);
-        }
-    }
-    private String doGet(String url){
-        String responseStr = "";
-        try {
-            HttpGet httpRequest = new HttpGet(url);
-            HttpParams params = new BasicHttpParams();
-            ConnManagerParams.setTimeout(params, 1000);
-            HttpConnectionParams.setConnectionTimeout(params, 3000);
-            HttpConnectionParams.setSoTimeout(params, 5000);
-            httpRequest.setParams(params);
-
-            HttpResponse httpResponse = new DefaultHttpClient().execute(httpRequest);
-            final int ret = httpResponse.getStatusLine().getStatusCode();
-            if(ret == HttpStatus.SC_OK){
-                responseStr = EntityUtils.toString(httpResponse.getEntity(), HTTP.UTF_8);
-            }else{
-                responseStr = "-1";
-            }
-        } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return responseStr;
     }
 }
